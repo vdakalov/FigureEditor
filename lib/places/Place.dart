@@ -7,9 +7,11 @@ class Place extends RenderingElement {
   Place(width, height): super(width: width, height: height);
   Place.fromContext(context): super.fromContext(context);
 
+  List<int> color = new List<int>(3);
+
   render() {
 
-    context..fillStyle = "rgb(220, 180, 180)"
+    context..fillStyle = "rgb(${color[0]}, ${color[1]}, ${color[2]})"
            ..fillRect(polygon.left, polygon.top, polygon.width, polygon.height);
 
   }

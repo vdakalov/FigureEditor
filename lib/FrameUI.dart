@@ -32,19 +32,23 @@ class FrameUI extends RenderingElement {
     // create polygons and defined sizes (without positions)
 
     places["top"] = new Place.fromContext(context);
+    places["top"].color = [225, 225, 225];
     places["top"].polygon = new Rectangle(
         0, 0, polygon.width, defaultPlaceSize);
 
     places["bottom"] = new Place.fromContext(context);
+    places["bottom"].color = [225, 225, 225];
     places["bottom"].polygon = new Rectangle(
         0, 0, polygon.width, defaultPlaceSize);
 
 
     places["left"] = new Place.fromContext(context);
+    places["left"].color = [210, 210, 210];
     places["left"].polygon = new Rectangle(
         0, 0, defaultPlaceSize, polygon.height - (defaultPlaceSize * 2));
 
     places["right"] = new Place.fromContext(context);
+    places["right"].color = [210, 210, 210];
     places["right"].polygon = new Rectangle(
         0, 0, defaultPlaceSize, polygon.height - (defaultPlaceSize * 2));
 
