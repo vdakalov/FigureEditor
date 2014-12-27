@@ -4,8 +4,10 @@ import "dart:html";
 import "dart:async";
 
 part "RenderingElement.dart";
+part "Button.dart";
 
-part "places/Place.dart";
+part "Place.dart";
+part "Panel.dart";
 
 class FrameUI extends RenderingElement {
 
@@ -13,7 +15,7 @@ class FrameUI extends RenderingElement {
 
   bool rendering = false;
 
-  Map<String, Place> places = new Map<String, Place>();
+  List<Place> places = new List<Place>();
 
   FrameUI(): super(width: null, height: null);
   FrameUI.fromContext(context): super.fromContext(context);
@@ -21,78 +23,14 @@ class FrameUI extends RenderingElement {
   init() {
     rendering = true;
     render(0);
-
-    initPlaces();
   }
 
-  initPlaces() {
-
-    int defaultPlaceSize = 20;
-
-    // create polygons and defined sizes (without positions)
-
-    places["top"] = new Place.fromContext(context);
-    places["top"].color = [225, 225, 225];
-    places["top"].polygon = new Rectangle(
-        0, 0, polygon.width, defaultPlaceSize);
-
-    places["bottom"] = new Place.fromContext(context);
-    places["bottom"].color = [225, 225, 225];
-    places["bottom"].polygon = new Rectangle(
-        0, 0, polygon.width, defaultPlaceSize);
-
-
-    places["left"] = new Place.fromContext(context);
-    places["left"].color = [210, 210, 210];
-    places["left"].polygon = new Rectangle(
-        0, 0, defaultPlaceSize, polygon.height - (defaultPlaceSize * 2));
-
-    places["right"] = new Place.fromContext(context);
-    places["right"].color = [210, 210, 210];
-    places["right"].polygon = new Rectangle(
-        0, 0, defaultPlaceSize, polygon.height - (defaultPlaceSize * 2));
-
-
-    updatePlaces();
-  }
-
-  updatePlaces() {
-    int defaultPlaceSize = 20;
-
-    // top place
-    places["top"].polygon = new Rectangle(
-        polygon.left,
-        polygon.top,
-        polygon.width,
-        places["top"].polygon.height);
-
-    // bottom place
-    places["bottom"].polygon = new Rectangle(
-        polygon.left,
-        polygon.bottom - places["bottom"].polygon.height,
-        polygon.width,
-        places["bottom"].polygon.height);
-
-    // left place
-    places["left"].polygon = new Rectangle(
-        polygon.left,
-        places["top"].polygon.bottom,
-        places["left"].polygon.width,
-        polygon.height -
-          (places["top"].polygon.height + places["bottom"].polygon.height));
-
-    // right place
-    places["right"].polygon = new Rectangle(
-        polygon.right - places["right"].polygon.width,
-        places["top"].polygon.bottom,
-        places["right"].polygon.width,
-        polygon.height -
-          (places["top"].polygon.height + places["bottom"].polygon.height));
+  add(Place place) {
+    places.add(place);
   }
 
   refreshCanvas() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    updatePlaces();
   }
 
   render(dynamic some) {
@@ -114,7 +52,6 @@ class FrameUI extends RenderingElement {
            ..closePath()
 
            ..beginPath()
-
            ..strokeRect(
                polygon.topLeft.x,
                polygon.topLeft.y,
@@ -124,7 +61,7 @@ class FrameUI extends RenderingElement {
            ..stroke()
            ..closePath();
 
-    places.forEach((name, place){
+    places.forEach((place){
       place.render();
     });
 
