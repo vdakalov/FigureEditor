@@ -8,6 +8,8 @@ main() {
   CanvasElement canvas = new CanvasElement(width: 500, height: 500);
   CanvasRenderingContext2D context = canvas.getContext("2d");
   document.body.append(canvas);
+  canvas.tabIndex = 1;
+  canvas.focus();
 
   FrameUI frameUI = new FrameUI(context);
 

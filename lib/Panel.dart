@@ -1,49 +1,45 @@
 part of FrameUI;
 
-class Panel extends RenderingElement {
+class Panel extends SimpleRenderingElement {
 
-  Panel(width, height): super(width: width, height: height);
-  Panel.fromContext(context): super.fromContext(context);
+  List<Element> _children = new List<Element>();
 
-  List<Button> _elements = new List<Button>();
-
-  int placement;
-
-  add(Button element) {
+  add(Element element) {
 
     Point offset = new Point(polygon.left, polygon.top);
 
-    if (_elements.length > 0) {
+    if (_children.length > 0) {
       offset = new Point(
-          _elements.last.polygon.left, _elements.last.polygon.top);
+          _children.last.polygon.left, _children.last.polygon.top);
     }
 
-    _elements.add(element);
+    _children.add(element);
     element.polygon = new Rectangle(
         offset.x, offset.y, element.polygon.width, element.polygon.height);
-    element.onPolygonUpdate.listen(_updatePanelRectangle);
   }
 
   _updatePanelRectangle(Rectangle _) {
     int width = 0, height = 0;
-    _elements.forEach((element){
+    _children.forEach((element){
       width = element.polygon.width > width ? element.polygon.width : width;
       height = element.polygon.height > height ? element.polygon.height : height;
     });
-
-    if (placement == FRAMEUI_PLACEMENT_HORIZONTAL) {
-      polygon = new Rectangle(polygon.left, polygon.top, polygon.width, height);
-    } else if (placement == FRAMEUI_PLACEMENT_VERTICAL) {
-      polygon = new Rectangle(polygon.left, polygon.top, width, polygon.height);
-    }
   }
 
-  render() {
+  render(CanvasRenderingContext2D context) {
 
-    _elements.forEach((element){
-      element.render();
+    _children.forEach((element){
+      element.render(context);
     });
 
   }
 
 }
+
+
+class Element extends SimpleRenderingElement {
+
+}
+
+
+

@@ -17,6 +17,7 @@ class Frame extends SimpleRenderingElement {
   CenterPlace center = new CenterPlace();
 
   init() {
+    _children = [top, left, right, bottom, center];
     parent.onPolygonChange.listen(updatePlaces);
   }
 
@@ -63,6 +64,10 @@ class Frame extends SimpleRenderingElement {
     right.render(context);
     top.render(context);
     bottom.render(context);
+
+  }
+
+  actionClick(Point point){
 
   }
 
