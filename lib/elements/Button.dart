@@ -11,11 +11,17 @@ class Button extends SimpleRenderingElement implements IconElement {
   Stream<Point> get onAction => _onAction.stream;
 
   Rectangle get polygon =>
-      new Rectangle(offset.x, offset.y, icon.width, icon.height);
+      new Rectangle(
+          offset.x,
+          offset.y,
+          icon.width + (padding * 2),
+          icon.height + (padding * 2));
 
   void set polygon(Rectangle rect) {
     offset = new Point(rect.left, rect.top);
   }
+
+  int padding = 2;
 
   setIcon({
     String name,
@@ -27,7 +33,14 @@ class Button extends SimpleRenderingElement implements IconElement {
   }
 
   render(CanvasRenderingContext2D context) {
-    context.drawImage(icon, polygon.left, polygon.top);
+
+    if (isHover) {
+      Rectangle rect = polygon;
+      context..fillStyle = "red"
+             ..fillRect(rect.left, rect.top, rect.width, rect.height);
+    }
+
+    context.drawImage(icon, polygon.left + padding, polygon.top + padding);
   }
 
   bool triggerClick(MouseEvent event) {

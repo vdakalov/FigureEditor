@@ -19,6 +19,8 @@ class SimpleRenderingElement implements StructureElement {
   // polygon getter and setter
   Rectangle get polygon => _polygon;
 
+  bool isHover = false;
+
   void set polygon(Rectangle polygon) {
    _polygon = polygon;
    _onPolygonChange.add(_polygon);
@@ -43,9 +45,12 @@ class SimpleRenderingElement implements StructureElement {
   onMouseMove(MouseEvent event) {
     _children.forEach((child){
       if (child.polygon.containsPoint(event.offset)) {
+        child.isHover = true;
         if (child.triggerMouseMove(event)) {
           child.onMouseMove(event);
         }
+      } else if (child.isHover) {
+        child.isHover = false;
       }
     });
   }

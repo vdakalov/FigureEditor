@@ -3,6 +3,7 @@ part of FrameUI;
 class Panel extends SimpleRenderingElement {
 
   List<Element> _children = new List<Element>();
+  int padding = 2;
 
   add(Element element) {
 
@@ -19,7 +20,10 @@ class Panel extends SimpleRenderingElement {
 
     element.parent = this;
     element.polygon = new Rectangle(
-        offset.x, offset.y, element.polygon.width, element.polygon.height);
+        offset.x + padding,
+        offset.y + padding,
+        element.polygon.width,
+        element.polygon.height);
 
     _children.add(element);
 
@@ -45,13 +49,16 @@ class Panel extends SimpleRenderingElement {
 
     if (placement == FRAMEUI_PLACEMENT_HORIZONTAL) {
       polygon = new Rectangle(
-          polygon.left, polygon.top, _children.last.polygon.right, height);
+          polygon.left,
+          polygon.top,
+          _children.last.polygon.right + (padding * 2),
+          height + (padding * 2));
     } else {
       polygon = new Rectangle(
           polygon.left,
           polygon.top,
-          polygon.width,
-          _children.last.polygon.bottom);
+          polygon.width + (padding * 2),
+          _children.last.polygon.bottom + (padding * 2));
     }
 
   }
