@@ -2,39 +2,51 @@ part of FrameUI;
 
 class Panel extends SimpleRenderingElement {
 
-  List<Element> _children = new List<Element>();
+  List<SimpleRenderingElement> _children = new List<SimpleRenderingElement>();
   int padding = 2;
 
-  add(Element element) {
-
-    Point offset = new Point(polygon.left, polygon.top);
-    int placement =
-        parent is TopPlace || parent is BottomPlace ?
-            FRAMEUI_PLACEMENT_HORIZONTAL : FRAMEUI_PLACEMENT_VERTICAL;
-
-    if (_children.length > 0) {
-      offset = placement == FRAMEUI_PLACEMENT_HORIZONTAL ?
-          new Point(_children.last.polygon.right, _children.last.polygon.top) :
-          new Point(_children.last.polygon.left, _children.last.polygon.bottom);
-    }
+  add(SimpleRenderingElement element) {
 
     element.parent = this;
-    element.polygon = new Rectangle(
-        offset.x + padding,
-        offset.y + padding,
-        element.polygon.width,
-        element.polygon.height);
-
     _children.add(element);
 
     if (element is IconElement) {
       element.icon.onLoad.listen((Event event){
+        updatePanelChildren();
         updatePanelRectangle();
       });
     } else {
+      updatePanelChildren();
       updatePanelRectangle();
     }
 
+  }
+
+  updatePanelChildren() {
+    for (int index = 0; index < _children.length; index++) {
+      updatePanelChild(_children.elementAt(index), index);
+    }
+  }
+
+  updatePanelChild(SimpleRenderingElement element, int index) {
+
+    Point offset = new Point(polygon.left + padding, polygon.top + padding);
+    int placement =
+        parent is TopPlace || parent is BottomPlace ?
+            FRAMEUI_PLACEMENT_HORIZONTAL : FRAMEUI_PLACEMENT_VERTICAL;
+
+    if (index > 0) {
+      SimpleRenderingElement prev = _children.elementAt(index - 1);
+      offset = placement == FRAMEUI_PLACEMENT_HORIZONTAL ?
+          new Point(prev.polygon.right, prev.polygon.top) :
+          new Point(prev.polygon.left, prev.polygon.bottom);
+    }
+
+    element.polygon = new Rectangle(
+        offset.x,
+        offset.y,
+        element.polygon.width,
+        element.polygon.height);
   }
 
   updatePanelRectangle() {

@@ -4,6 +4,6 @@ abstract class Element {
 
 }
 
-abstract class IconElement implements Element {
+abstract class IconElement extends SimpleRenderingElement implements Element {
   ImageElement icon;
 }

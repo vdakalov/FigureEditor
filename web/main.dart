@@ -24,7 +24,15 @@ main() {
 
   open.setIcon(name: "Doc-Add");
   open.onAction.listen((Point point){
-    print("Click to ${point}");
+    print("Add new");
+  });
+
+  Button save = new Button();
+  controls.add(save);
+
+  save.setIcon(name: "Save");
+  save.onAction.listen((Point point){
+    print("Save");
   });
 
 
