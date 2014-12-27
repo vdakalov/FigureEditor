@@ -4,79 +4,56 @@ import "dart:html";
 import "dart:async";
 
 part "RenderingElement.dart";
-part "Button.dart";
-
+part "Frame.dart";
 part "Place.dart";
+part "places/TopPlace.dart";
+part "places/LeftPlace.dart";
+part "places/RightPlace.dart";
+part "places/BottomPlace.dart";
+part "places/CenterPlace.dart";
+
+
 part "Panel.dart";
 
-class FrameUI extends RenderingElement {
+class FrameUI {
+
+  RootRenderingElement _root;
 
   CanvasRenderingContext2D context;
 
-  bool rendering = false;
+  List<Frame> _frames = new List<Frame>();
 
-  List<Place> places = new List<Place>();
-
-  FrameUI(): super(width: null, height: null);
-  FrameUI.fromContext(context): super.fromContext(context);
-
-  init() {
-    rendering = true;
-    render(0);
+  FrameUI(this.context) {
+    _root = new RootRenderingElement();
+    update();
+    _render(0);
   }
 
-  add(Place place) {
-    places.add(place);
-  }
+  _render(dynamic some) {
 
-  refreshCanvas() {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  }
-
-  render(dynamic some) {
-
-    context..clearRect(
-                 polygon.topLeft.x,
-                 polygon.topLeft.y,
-                 polygon.width,
-                 polygon.height)
-
-           ..beginPath()
-           ..fillStyle = "rgb(240, 240, 240)"
-           ..fillRect(
-               polygon.topLeft.x,
-               polygon.topLeft.y,
-               polygon.width,
-               polygon.height)
-           ..fill()
-           ..closePath()
-
-           ..beginPath()
-           ..strokeRect(
-               polygon.topLeft.x,
-               polygon.topLeft.y,
-               polygon.width,
-               polygon.height)
-           ..strokeStyle = "rgb(160, 160, 160)"
-           ..stroke()
-           ..closePath();
-
-    places.forEach((place){
-      place.render();
+    _frames.forEach((frame){
+      frame.render(context);
     });
 
-    if (rendering) {
-      window.requestAnimationFrame(render);
-    }
+    window.requestAnimationFrame(_render);
   }
 
+  add(Frame frame) {
+    frame.parent = _root;
+    frame.polygon = _root.polygon;
+    frame.init();
+    _frames.add(frame);
+  }
+
+  update() {
+    _root.polygon = new Rectangle(
+       0, 0, context.canvas.width, context.canvas.height);
+  }
 }
 
-
-
-
-
-
+class RootRenderingElement extends SimpleRenderingElement {
+  render(CanvasRenderingContext2D context) {}
+}
 
 
 

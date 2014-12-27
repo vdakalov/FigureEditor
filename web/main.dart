@@ -1,51 +1,28 @@
 
 import "dart:html";
+import "dart:async";
 import "package:FrameUI/FrameUI.dart";
 
 main() {
 
-  FrameUI frame = new FrameUI();
+  CanvasElement canvas = new CanvasElement(width: 500, height: 500);
+  CanvasRenderingContext2D context = canvas.getContext("2d");
+  document.body.append(canvas);
 
-  document.body.append(frame.context.canvas);
+  FrameUI frameUI = new FrameUI(context);
 
-  frame.polygon = new Rectangle(10, 10, 500, 300);
-  frame.refreshCanvas();
+  Frame frame = new Frame();
+  frameUI.add(frame);
 
-  Place top = new Place.fromContext(frame.context);
-  top.placement = FRAMEUI_PLACEMENT_HORIZONTAL;
-  top.position = FRAMEUI_POSITION_TOP;
+  frame.top.polygon = new Rectangle(0, 0, canvas.width, 20);
+  frame.left.polygon = new Rectangle(0, 20, 20, canvas.height - 40);
+  frame.right.polygon = new Rectangle(canvas.width - 20, 20, 20, canvas.height - 40);
+  frame.bottom.polygon = new Rectangle(0, canvas.height - 20, canvas.width, 20);
 
-  Panel control = new Panel.fromContext(frame.context);
-  Button open = new Button.fromContext(frame.context);
-
-  control.add(open);
-  top.add(control);
-  frame.add(top);
-
-
-
-//  places["top"] = new Place.fromContext(context);
-//  places["top"].placement = FRAMEUI_PLACEMENT_HORIZONTAL;
-//  places["top"].color = [225, 225, 225];
-//  places["top"].polygon = new Rectangle(
-//      0, 0, polygon.width, defaultPlaceSize);
-//
-//  places["bottom"] = new Place.fromContext(context);
-//  places["bottom"].placement = FRAMEUI_PLACEMENT_HORIZONTAL;
-//  places["bottom"].color = [225, 225, 225];
-//  places["bottom"].polygon = new Rectangle(
-//      0, 0, polygon.width, defaultPlaceSize);
-//
-//  places["left"] = new Place.fromContext(context);
-//  places["left"].placement = FRAMEUI_PLACEMENT_VERTICAL;
-//  places["left"].color = [210, 210, 210];
-//  places["left"].polygon = new Rectangle(
-//      0, 0, defaultPlaceSize, polygon.height - (defaultPlaceSize * 2));
-//
-//  places["right"] = new Place.fromContext(context);
-//  places["right"].placement = FRAMEUI_PLACEMENT_VERTICAL;
-//  places["right"].color = [210, 210, 210];
-//  places["right"].polygon = new Rectangle(
-//      0, 0, defaultPlaceSize, polygon.height - (defaultPlaceSize * 2));
+  new Timer(new Duration(seconds: 10), (){
+    canvas.setAttribute("width", "1000");
+    canvas.setAttribute("height", "800");
+    frameUI.update();
+  });
 
 }

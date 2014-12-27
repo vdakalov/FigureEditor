@@ -1,74 +1,33 @@
 part of FrameUI;
 
-class RenderingElement {
+class SimpleRenderingElement implements RenderingElement {
 
-  FrameUI frame;
-  CanvasRenderingContext2D context;
+  SimpleRenderingElement parent;
 
-  Rectangle area;
+  // placement
+  Rectangle _polygon = new Rectangle(0, 0, 0, 0);
 
-  Rectangle get polygon => area;
-  void set polygon(Rectangle rect) {
-    area = rect;
-    _onPolygonUpdate.add(area);
+  // stream for watch polygon changes
+  StreamController _onPolygonChange = new StreamController<Rectangle>();
+  Stream get onPolygonChange => _onPolygonChange.stream;
+
+  // polygon getter and setter
+  Rectangle get polygon => _polygon;
+
+  void set polygon(Rectangle polygon) {
+   _polygon = polygon;
+   _onPolygonChange.add(_polygon);
   }
 
-  Map<String, StreamSubscription> _subscriptions =
-      new Map<String, StreamSubscription>();
-
-  StreamController _onPolygonUpdate;
-  Stream onPolygonUpdate;
-
-  RenderingElement({int width: null, int height: null}) {
-
-    width = width is int ? width : width = document.body.clientWidth - 3;
-    height = height is int ? height : document.body.clientHeight - 3;
-
-    CanvasElement canvas = new CanvasElement(width: width, height: height);
-
-    context = canvas.getContext("2d");
-
-    _init();
+  @override
+  render(CanvasRenderingContext2D context) {
+    context
+        ..fillStyle = "rgb(220, 220, 220)"
+        ..fillRect(polygon.left, polygon.top, polygon.width, polygon.height);
   }
 
-  RenderingElement.fromContext(this.context) {
-    _init();
-  }
+}
 
-  _init() {
-
-    _onPolygonUpdate = new StreamController();
-    onPolygonUpdate = _onPolygonUpdate.stream;
-
-    _subscriptions["resize"] = context.canvas.onResize.listen(_onResize);
-    _subscriptions["click"] = context.canvas.onClick.listen(_onClick);
-
-    polygon = new Rectangle(0, 0, context.canvas.width, context.canvas.height);
-
-    init();
-  }
-
-  destroy() {
-
-    // unsubscribed
-    _subscriptions.forEach((name, substribe){
-      substribe.cancel();
-    });
-
-  }
-
-  init() {}
-
-  onResize(Event event) {}
-  _onResize(Event event) {
-    onResize(event);
-  }
-
-  onClick(MouseEvent event) {}
-  _onClick(MouseEvent event) {
-    if (polygon.containsPoint(event.offset)) {
-      onClick(event);
-    }
-  }
-
+abstract class RenderingElement {
+  render(CanvasRenderingContext2D context);
 }
