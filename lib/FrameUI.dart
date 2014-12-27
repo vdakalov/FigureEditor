@@ -11,9 +11,9 @@ part "places/LeftPlace.dart";
 part "places/RightPlace.dart";
 part "places/BottomPlace.dart";
 part "places/CenterPlace.dart";
-
-
 part "Panel.dart";
+part "Element.dart";
+part "elements/Button.dart";
 
 class FrameUI {
 

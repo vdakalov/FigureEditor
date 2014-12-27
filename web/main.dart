@@ -16,10 +16,16 @@ main() {
   Frame frame = new Frame();
   frameUI.add(frame);
 
-  frame.top.polygon = new Rectangle(0, 0, canvas.width, 20);
-  frame.left.polygon = new Rectangle(0, 20, 20, canvas.height - 40);
-  frame.right.polygon = new Rectangle(canvas.width - 20, 20, 20, canvas.height - 40);
-  frame.bottom.polygon = new Rectangle(0, canvas.height - 20, canvas.width, 20);
+  Panel controls = new Panel();
+  frame.top.add(controls);
+
+  Button open = new Button();
+  controls.add(open);
+
+  open.setIcon(name: "Doc-Add");
+  open.onAction.listen((Point point){
+    print("Click to ${point}");
+  });
 
   new Timer(new Duration(seconds: 10), (){
     canvas.setAttribute("width", "1000");

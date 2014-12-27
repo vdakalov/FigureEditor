@@ -67,8 +67,4 @@ class Frame extends SimpleRenderingElement {
 
   }
 
-  actionClick(Point point){
-
-  }
-
 }
