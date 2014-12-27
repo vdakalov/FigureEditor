@@ -46,8 +46,6 @@ class RenderingElement {
 
   init() {}
 
-  render(dynamic some) {}
-
   onResize(Event event) {}
   _onResize(Event event) {
     onResize(event);
