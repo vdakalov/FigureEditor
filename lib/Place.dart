@@ -3,7 +3,7 @@ part of FrameUI;
 class Place extends SimpleRenderingElement {
 
   List<Panel> _children = new List<Panel>();
-  List<int> backgroundColor = [220, 220, 220];
+  List<int> backgroundColor = [225, 225, 225];
 
   add(Panel panel) {
     panel.parent = this;
@@ -38,8 +38,8 @@ class Place extends SimpleRenderingElement {
   }
 
   render(CanvasRenderingContext2D context) {
-    context..fillStyle = "rgb(${backgroundColor.join(", ")})"
-           ..fillRect(polygon.left, polygon.top, polygon.width, polygon.height);
+
+    super.render(context);
 
     _children.forEach((panel){
       panel.render(context);

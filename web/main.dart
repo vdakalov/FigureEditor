@@ -27,6 +27,8 @@ main() {
     print("Click to ${point}");
   });
 
+
+
   new Timer(new Duration(seconds: 10), (){
     canvas.setAttribute("width", "1000");
     canvas.setAttribute("height", "800");

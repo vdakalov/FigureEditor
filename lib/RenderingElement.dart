@@ -9,6 +9,8 @@ class SimpleRenderingElement implements StructureElement {
   SimpleRenderingElement parent;
   List<StructureElement> _children;
 
+  List<int> backgroundColor = [235, 235, 235];
+
   // placement
   Rectangle _polygon = new Rectangle(0, 0, 0, 0);
 
@@ -28,9 +30,22 @@ class SimpleRenderingElement implements StructureElement {
 
   @override
   render(CanvasRenderingContext2D context) {
-    context
-        ..fillStyle = "rgb(220, 220, 220)"
-        ..fillRect(polygon.left, polygon.top, polygon.width, polygon.height);
+    context..fillStyle = "rgb(${backgroundColor.join(", ")})"
+           ..fillRect(polygon.left, polygon.top, polygon.width, polygon.height)
+
+           ..moveTo(polygon.left, polygon.bottom)
+
+           ..strokeStyle =
+                  "rgb(${backgroundColor.map((i){return i+15;}).join(", ")})"
+           ..lineTo(polygon.left, polygon.top)
+           ..lineTo(polygon.right, polygon.top)
+           ..stroke()
+
+           ..strokeStyle =
+                  "rgb(${backgroundColor.map((i){return i-15;}).join(", ")})"
+           ..lineTo(polygon.right, polygon.bottom)
+           ..lineTo(polygon.left, polygon.bottom)
+           ..stroke();
   }
 
   onClick(MouseEvent event) {
@@ -44,13 +59,20 @@ class SimpleRenderingElement implements StructureElement {
   }
   onMouseMove(MouseEvent event) {
     _children.forEach((child){
+
+      if (child.triggerMouseMove(event)) {
+        child.onMouseMove(event);
+      }
+
       if (child.polygon.containsPoint(event.offset)) {
-        child.isHover = true;
-        if (child.triggerMouseMove(event)) {
-          child.onMouseMove(event);
+        if (!child.isHover) {
+          child.isHover = true;
+          child.triggerMouseEnter(event);
         }
+        child.triggerMouseOver(event);
       } else if (child.isHover) {
         child.isHover = false;
+        child.triggerMouseOut(event);
       }
     });
   }
@@ -99,6 +121,9 @@ class SimpleRenderingElement implements StructureElement {
   bool triggerMouseMove(MouseEvent event) { return true; }
   bool triggerMouseUp(MouseEvent event) { return true; }
   bool triggerMouseDown(MouseEvent event) { return true; }
+  bool triggerMouseEnter(MouseEvent event) { return true; }
+  bool triggerMouseOut(MouseEvent event) { return true; }
+  bool triggerMouseOver(MouseEvent event) { return true; }
 
   bool triggerKeyPress(KeyboardEvent event) { return true; }
   bool triggerKeyDown(KeyboardEvent event) { return true; }

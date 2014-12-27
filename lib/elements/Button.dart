@@ -2,7 +2,7 @@ part of FrameUI;
 
 class Button extends SimpleRenderingElement implements IconElement {
 
-  List<Element> _children = new List<Element>();
+  List<SimpleRenderingElement> _children = new List<SimpleRenderingElement>();
 
   ImageElement icon = new ImageElement();
   Point offset = new Point(0, 0);
@@ -36,7 +36,8 @@ class Button extends SimpleRenderingElement implements IconElement {
 
     if (isHover) {
       Rectangle rect = polygon;
-      context..fillStyle = "red"
+      context..fillStyle =
+                  "rgb(${backgroundColor.map((i){return i+15;}).join(", ")})"
              ..fillRect(rect.left, rect.top, rect.width, rect.height);
     }
 
