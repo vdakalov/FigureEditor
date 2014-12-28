@@ -1,6 +1,6 @@
 part of FrameUI;
 
-abstract class IControlStructureElement implements IStructureElement {
+abstract class IControlStructureElement {
 
 
 }

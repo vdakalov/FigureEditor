@@ -2,7 +2,6 @@ interface IRenderingElement
 interface IStructureElement
 interface IInteractiveElement
 
-abstract BaseRendering
 abstract SimpleStructureElement
 
 abstract DisplayedStructureElement
@@ -29,14 +28,8 @@ IInteractiveElement: bool triggerKeyUp(MouseEvent event)
 IInteractiveElement: bool triggerKeyDown(MouseEvent event)
 IInteractiveElement: bool triggerKeyPress(MouseEvent event)
 
-BaseRendering: List<int> backgroundColor
-BaseRendering: void renderBackground(CanvasRenderingContext2D context)
-BaseRendering: void renderBorders(CanvasRenderingContext2D context)
-
-IStructureElement <|-- IInteractiveElement
-
-IRenderingElement <|-- BaseRendering
+IStructureElement <|-- SimpleStructureElement
 IInteractiveElement <|-- SimpleStructureElement
 
 SimpleStructureElement <|-- DisplayedStructureElement
-BaseRendering <|-- DisplayedStructureElement
+IRenderingElement <|-- DisplayedStructureElement

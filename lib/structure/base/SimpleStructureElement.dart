@@ -3,18 +3,38 @@ part of FrameUI;
 class SimpleStructureElement implements IStructureElement, IInteractiveElement {
 
   @override
-  IStructureElement parent;
+  SimpleStructureElement parent;
 
   @override
-  List<IStructureElement> _children;
+  List<SimpleStructureElement> _children;
 
   @override
   bool isHover = false;
 
-  @override
-  Rectangle area = new Rectangle(0, 0, 0, 0);
+  int padding = 0;
 
-  Point get position => new Point(area.left, area.top);
+  Rectangle _area = new Rectangle(0, 0, 0, 0);
+
+  @override
+  Rectangle get area =>
+      new Rectangle(
+          parent.area.left + parent.padding + _area.left,
+          parent.area.top + parent.padding + _area.top,
+          _area.width + (padding * 2),
+          _area.height + (padding * 2));
+
+  @override
+  void set area(Rectangle rect) {
+    _area = new Rectangle(
+        rect.left - (parent.area.left + parent.padding),
+        rect.top - (parent.area.top + parent.padding),
+        rect.width,
+        rect.height);
+  }
+
+  Point get position =>
+      new Point(_area.left, _area.top);
+
   void set position(Point pos) {
     area = new Rectangle(pos.x, pos.y, area.width, area.height);
   }
@@ -22,29 +42,29 @@ class SimpleStructureElement implements IStructureElement, IInteractiveElement {
   Point get size => new Point(area.width, area.height);
   void set size(Point size) {
     area = new Rectangle(area.left, area.top, size.x, size.y);
+    parent.updateSize();
   }
 
   List<int> backgroundColor = [220, 220, 220, 1];
 
-  add(IStructureElement child) {
+  render(CanvasRenderingContext2D context) {
+    _children.forEach((child){
+      child.render(context);
+    });
+  }
+
+  init() {
+
+  }
+
+  add(SimpleStructureElement child) {
     child.parent = this;
+    child.init();
     _children.add(child);
     updateSize();
   }
 
   updateSize() {
-
-    int width = 0, height = 0;
-    Point tempSize = new Point(0, 0);
-
-    _children.forEach((child){
-      tempSize += new Point(child.area.width, area.height);
-    });
-
-    size = tempSize;
-  }
-
-  updatePosition() {
 
   }
 

@@ -13,42 +13,36 @@ main() {
 
   FrameUI frameUI = new FrameUI(context);
 
-  Frame frame = new Frame();
-  frameUI.add(frame);
+  FrameStructureElement frame = new FrameStructureElement();
+  frameUI.frames.add(frame);
 
-  // left
-  Panel tools = new Panel();
-  frame.left.add(tools);
-
-  Button add = new Button();
-  tools.add(add);
-
-  add.setIcon(name: "Add");
-  add.onAction.listen((Point point){
-    print("Add");
-  });
-
-  // top
-  Panel controls = new Panel();
+  // top frame
+  PanelStructureElement controls = new PanelStructureElement();
   frame.top.add(controls);
 
-  Button open = new Button();
+  IconButton open = new IconButton.fromIcon(name: "Doc-Add");
   controls.add(open);
 
-  open.setIcon(name: "Doc-Add");
-  open.onAction.listen((Point point){
-    print("Add new");
-  });
+  // left
+  PanelStructureElement tools = new PanelStructureElement();
+  frame.left.add(tools);
 
-  Button save = new Button();
-  controls.add(save);
+  IconButton add = new IconButton.fromIcon(name: "Add");
+  tools.add(add);
 
-  save.setIcon(name: "Save");
-  save.onAction.listen((Point point){
-    print("Save");
-  });
+  // right
+  PanelStructureElement help = new PanelStructureElement();
+  frame.right.add(help);
 
+  IconButton chart = new IconButton.fromIcon(name: "Chart1");
+  help.add(chart);
 
+  // bottom
+  PanelStructureElement status = new PanelStructureElement();
+  frame.bottom.add(status);
+
+  IconButton success = new IconButton.fromIcon(name: "Ok");
+  status.add(success);
 
   new Timer(new Duration(seconds: 4), (){
     canvas.setAttribute("width", "1000");

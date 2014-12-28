@@ -8,6 +8,5 @@ abstract class IStructureElement {
 
   void add(IStructureElement child);
   void updateSize();
-  void updatePosition();
 
 }

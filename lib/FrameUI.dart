@@ -1,7 +1,6 @@
 library FrameUI;
 
 import "dart:html";
-import "dart:async";
 
 // interfaces
 part "IRenderingElement.dart";
@@ -18,53 +17,44 @@ part "structure/RootStructureElement.dart";
 part "structure/FrameStructureElement.dart";
 part "structure/PlaceStructureElement.dart";
 part "structure/PanelStructureElement.dart";
+part "structure/ControlStructureElement.dart";
 
-part "Frame.dart";
-part "Place.dart";
-part "places/TopPlace.dart";
-part "places/LeftPlace.dart";
-part "places/RightPlace.dart";
-part "places/BottomPlace.dart";
-part "places/CenterPlace.dart";
-part "Panel.dart";
-part "Element.dart";
-part "elements/Button.dart";
+// places
+part "places/HorizontalPlace.dart";
+part "places/VericalPlace.dart";
+
+// controls
+part "controls/IconButton.dart";
 
 class FrameUI {
 
-  RootStructureElement _root;
+  RootStructureElement frames;
 
   CanvasRenderingContext2D context;
 
   FrameUI(this.context) {
-    _root = new RootStructureElement();
+    frames = new RootStructureElement();
 
-    context.canvas..onClick.listen(_root.onClick)
-                  ..onMouseMove.listen(_root.onMouseMove)
-                  ..onMouseDown.listen(_root.onMouseDown)
-                  ..onMouseUp.listen(_root.onMouseUp)
-                  ..onKeyDown.listen(_root.onKeyDown)
-                  ..onKeyPress.listen(_root.onKeyPress)
-                  ..onKeyUp.listen(_root.onKeyUp);
+    context.canvas..onResize.listen((Event event){update();})
+                  ..onClick.listen(frames.onClick)
+                  ..onMouseMove.listen(frames.onMouseMove)
+                  ..onMouseDown.listen(frames.onMouseDown)
+                  ..onMouseUp.listen(frames.onMouseUp)
+                  ..onKeyDown.listen(frames.onKeyDown)
+                  ..onKeyPress.listen(frames.onKeyPress)
+                  ..onKeyUp.listen(frames.onKeyUp);
 
     update();
     _render(0);
   }
 
-  add(FrameStructureElement frame) {
-    frame.parent = _root;
-    frame.area = _root.area;
-    _root._children.add(frame);
-  }
-
   _render(dynamic some) {
-    _root.render(context);
+    frames.render(context);
     window.requestAnimationFrame(_render);
   }
 
   update() {
-    _root.area = new Rectangle(
-       0, 0, context.canvas.width, context.canvas.height);
+    frames.size = new Point(context.canvas.width, context.canvas.height);
   }
 
 }
