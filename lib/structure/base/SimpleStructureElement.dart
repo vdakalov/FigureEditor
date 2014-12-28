@@ -12,7 +12,7 @@ class SimpleStructureElement implements IStructureElement, IInteractiveElement {
   bool isHover = false;
 
   @override
-  Rectangle area;
+  Rectangle area = new Rectangle(0, 0, 0, 0);
 
   Point get position => new Point(area.left, area.top);
   void set position(Point pos) {
@@ -25,6 +25,28 @@ class SimpleStructureElement implements IStructureElement, IInteractiveElement {
   }
 
   List<int> backgroundColor = [220, 220, 220, 1];
+
+  add(IStructureElement child) {
+    child.parent = this;
+    _children.add(child);
+    updateSize();
+  }
+
+  updateSize() {
+
+    int width = 0, height = 0;
+    Point tempSize = new Point(0, 0);
+
+    _children.forEach((child){
+      tempSize += new Point(child.area.width, area.height);
+    });
+
+    size = tempSize;
+  }
+
+  updatePosition() {
+
+  }
 
   @override
   onClick(MouseEvent event) {

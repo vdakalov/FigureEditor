@@ -1,12 +1,7 @@
 part of FrameUI;
 
-class RootRenderingElement extends SimpleStructureElement {
+class RootStructureElement extends DisplayedStructureElement {
 
-  List<Frame> _children = new List<Frame>();
+  List<FrameStructureElement> _children = new List<FrameStructureElement>();
 
-  render(CanvasRenderingContext2D context) {
-    _children.forEach((frame){
-      frame.render(context);
-    });
-  }
 }
