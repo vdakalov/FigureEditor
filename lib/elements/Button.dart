@@ -30,6 +30,9 @@ class Button extends SimpleRenderingElement implements IconElement {
 
     icon.id = name;
     icon.src = "${path}/${name}.${extension}";
+    icon.onLoad.listen((Event data){
+      parent.updateSizes();
+    });
   }
 
   render(CanvasRenderingContext2D context) {

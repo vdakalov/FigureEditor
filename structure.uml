@@ -1,0 +1,42 @@
+interface IRenderingElement
+interface IStructureElement
+interface IInteractiveElement
+
+abstract BaseRendering
+abstract SimpleStructureElement
+
+abstract DisplayedStructureElement
+
+
+IRenderingElement: Rectangle area
+IRenderingElement: render(CanvasRenderingContext2D context)
+
+IStructureElement: IStructureElement parent
+IStructureElement: List<IStructureElement> _children
+
+IInteractiveElement: void onClick(MouseEvent event)
+IInteractiveElement: void onMouseMove(MouseEvent event)
+IInteractiveElement: void onMouseUp(MouseEvent event)
+IInteractiveElement: void onMouseDown(MouseEvent event)
+IInteractiveElement: void onKeyUp(KeyboardEvent event)
+IInteractiveElement: void onKeyDown(KeyboardEvent event)
+IInteractiveElement: void onKeyPress(KeyboardEvent event)
+IInteractiveElement: bool triggerClick(MouseEvent event)
+IInteractiveElement: bool triggerMouseMove(MouseEvent event)
+IInteractiveElement: bool triggerMouseUp(MouseEvent event)
+IInteractiveElement: bool triggerMouseDown(MouseEvent event)
+IInteractiveElement: bool triggerKeyUp(MouseEvent event)
+IInteractiveElement: bool triggerKeyDown(MouseEvent event)
+IInteractiveElement: bool triggerKeyPress(MouseEvent event)
+
+BaseRendering: List<int> backgroundColor
+BaseRendering: void renderBackground(CanvasRenderingContext2D context)
+BaseRendering: void renderBorders(CanvasRenderingContext2D context)
+
+IStructureElement <|-- IInteractiveElement
+
+IRenderingElement <|-- BaseRendering
+IInteractiveElement <|-- SimpleStructureElement
+
+SimpleStructureElement <|-- DisplayedStructureElement
+BaseRendering <|-- DisplayedStructureElement

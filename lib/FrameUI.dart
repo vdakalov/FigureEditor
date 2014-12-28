@@ -3,7 +3,19 @@ library FrameUI;
 import "dart:html";
 import "dart:async";
 
-part "RenderingElement.dart";
+// interfaces
+part "IRenderingElement.dart";
+part "IStructureElement.dart";
+part "IInteractiveElement.dart";
+
+part "rendering/BaseRender.dart";
+
+part "structure/base/SimpleStructureElement.dart";
+part "structure/base/DisplayedStructureElement.dart";
+
+part "structure/RootStructureElement.dart";
+
+
 part "Frame.dart";
 part "Place.dart";
 part "places/TopPlace.dart";
@@ -54,17 +66,6 @@ class FrameUI {
        0, 0, context.canvas.width, context.canvas.height);
   }
 
-}
-
-class RootRenderingElement extends SimpleRenderingElement {
-
-  List<Frame> _children = new List<Frame>();
-
-  render(CanvasRenderingContext2D context) {
-    _children.forEach((frame){
-      frame.render(context);
-    });
-  }
 }
 
 

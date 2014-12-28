@@ -17,25 +17,17 @@ class Frame extends SimpleRenderingElement {
   CenterPlace center = new CenterPlace();
 
   init() {
+    top.parent = this;
+    left.parent = this;
+    right.parent = this;
+    bottom.parent = this;
+    center.parent = this;
     _children = [top, left, right, bottom, center];
-    parent.onPolygonChange.listen(updatePlaces);
   }
 
-  updatePlaces(Rectangle _) {
+  update() {
 
     polygon = parent.polygon;
-
-    top.polygon = new Rectangle(
-        polygon.left,
-        polygon.top,
-        polygon.width,
-        top.polygon.height);
-
-    bottom.polygon = new Rectangle(
-        polygon.left,
-        polygon.bottom - bottom.polygon.height,
-        polygon.width,
-        bottom.polygon.height);
 
     left.polygon = new Rectangle(
         0,
@@ -54,6 +46,24 @@ class Frame extends SimpleRenderingElement {
         top.polygon.bottom,
         right.polygon.left - left.polygon.right,
         parent.polygon.height - (top.polygon.height + bottom.polygon.height));
+
+  }
+
+  updateMainPlaces(Rectangle _) {
+
+    polygon = parent.polygon;
+
+    top.polygon = new Rectangle(
+      polygon.left,
+      polygon.top,
+      polygon.width,
+      top.polygon.height);
+
+    bottom.polygon = new Rectangle(
+      polygon.left,
+      polygon.bottom - bottom.polygon.height,
+      polygon.width,
+      bottom.polygon.height);
 
   }
 

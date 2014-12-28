@@ -2,6 +2,7 @@ part of FrameUI;
 
 class Panel extends SimpleRenderingElement {
 
+  Place parent;
   List<SimpleRenderingElement> _children = new List<SimpleRenderingElement>();
   int padding = 2;
 
@@ -9,23 +10,29 @@ class Panel extends SimpleRenderingElement {
 
     element.parent = this;
     _children.add(element);
-
-    if (element is IconElement) {
-      element.icon.onLoad.listen((Event event){
-        updatePanelChildren();
-        updatePanelRectangle();
-      });
-    } else {
-      updatePanelChildren();
-      updatePanelRectangle();
-    }
+    updateSizes();
 
   }
 
-  updatePanelChildren() {
+  updateSizes() {
+
+    // update panel position
+    polygon = new Rectangle(
+        parent.polygon.left,
+        parent.polygon.top,
+        polygon.width,
+        polygon.height);
+
+    // update children rectangles
     for (int index = 0; index < _children.length; index++) {
       updatePanelChild(_children.elementAt(index), index);
     }
+
+    updatePanelRectangle();
+  }
+
+  updatePosition() {
+
   }
 
   updatePanelChild(SimpleRenderingElement element, int index) {
@@ -69,7 +76,7 @@ class Panel extends SimpleRenderingElement {
       polygon = new Rectangle(
           polygon.left,
           polygon.top,
-          polygon.width + (padding * 2),
+          width + (padding * 2),
           _children.last.polygon.bottom + (padding * 2));
     }
 

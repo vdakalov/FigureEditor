@@ -16,6 +16,19 @@ main() {
   Frame frame = new Frame();
   frameUI.add(frame);
 
+  // left
+  Panel tools = new Panel();
+  frame.left.add(tools);
+
+  Button add = new Button();
+  tools.add(add);
+
+  add.setIcon(name: "Add");
+  add.onAction.listen((Point point){
+    print("Add");
+  });
+
+  // top
   Panel controls = new Panel();
   frame.top.add(controls);
 
@@ -37,7 +50,7 @@ main() {
 
 
 
-  new Timer(new Duration(seconds: 10), (){
+  new Timer(new Duration(seconds: 4), (){
     canvas.setAttribute("width", "1000");
     canvas.setAttribute("height", "800");
     frameUI.update();
