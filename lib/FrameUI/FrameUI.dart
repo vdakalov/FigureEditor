@@ -41,7 +41,9 @@ class FrameUI {
 
   FrameUI(this.context) {
 
-    context.canvas.onClick.listen(_onClick);
+    context.canvas..onClick.listen(_onClick)
+                  ..onMouseMove.listen(_onMouseMove)
+                  ;
 
     _render(0);
   }
@@ -55,7 +57,6 @@ class FrameUI {
   }
 
   _onClick(MouseEvent event) {
-
     panels.forEach((panel){
       panel.elements.forEach((element){
         if (element.area.containsPoint(event.offset)) {
@@ -63,7 +64,19 @@ class FrameUI {
         }
       });
     });
+  }
 
+  _onMouseMove(MouseEvent event) {
+    panels.forEach((panel){
+      panel.elements.forEach((element){
+        if (element.area.containsPoint(event.offset)) {
+          element.isHover = true;
+          element.move(event.offset);
+        } else if (element.isHover) {
+          element.isHover = false;
+        }
+      });
+    });
   }
 
 }

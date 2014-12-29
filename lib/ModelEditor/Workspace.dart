@@ -4,6 +4,8 @@ class Workspace extends WM.IControlStructureElement {
 
   Model model;
 
+  bool isHover = false;
+
   Rectangle area = new Rectangle(0, 0, 0, 0);
 
   render(CanvasRenderingContext2D context) {
@@ -22,10 +24,12 @@ class Workspace extends WM.IControlStructureElement {
   }
 
   action(Point point) {
-
     if (model is Model) {
       model.points.add(point);
     }
+  }
+
+  move(Point point) {
 
   }
 

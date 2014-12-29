@@ -6,6 +6,8 @@ class IconButton implements IControlStructureElement {
 
   Point position = new Point(0, 0);
 
+  bool isHover = false;
+
   Rectangle get area => new Rectangle(
       position.x,
       position.y,
@@ -35,11 +37,21 @@ class IconButton implements IControlStructureElement {
   }
 
   render(CanvasRenderingContext2D context) {
+
+    if (isHover) {
+      context..fillStyle = "rgb(${backgroundColor.join(", ")})"
+             ..fillRect(area.left, area.top, area.width, area.height);
+    }
+
     context.drawImage(icon, area.left + padding, area.top + padding);
   }
 
   action(Point point) {
     _onAction();
+  }
+
+  move(Point point) {
+
   }
 
 }

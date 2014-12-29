@@ -5,6 +5,8 @@ class ListItems implements IControlStructureElement {
   List<ListItem> _items = new List<ListItem>();
   ListItem current;
 
+  bool isHover = false;
+
   StreamController<ListItem> _onSelect = new StreamController<ListItem>();
   Stream<ListItem> get onSelect => _onSelect.stream;
 
@@ -87,6 +89,10 @@ class ListItems implements IControlStructureElement {
         select(item);
       }
     });
+  }
+
+  move(Point point) {
+
   }
 
 }
