@@ -13,26 +13,38 @@ class ListItem implements IControlStructureElement {
   int size = 16;
   int padding = 2;
 
+  bool visible = true;
+  bool isHover = false;
+
   ListItem(this.id, this.title);
 
   render(CanvasRenderingContext2D context) {
 
     if (isSelected) {
-      context..fillStyle = "rgb(210, 210, 210)"
-             ..fillRect(area.left, area.top, area.width, area.height);
+      context..beginPath()
+             ..fillStyle = "rgb(210, 210, 210)"
+             ..fillRect(area.left, area.top, area.width, area.height)
+             ..closePath();
     }
 
-    context..fillStyle = "rgb(${color.join(", ")})"
+    context..beginPath()
+           ..fillStyle = "rgb(${color.join(", ")})"
            ..font = "${size}px Verdana"
            ..textBaseline = "middle"
            ..fillText(
                title,
                area.left + padding,
                area.top + (area.height / 2),
-               area.width - (padding * 2));
+               area.width - (padding * 2))
+           ..closePath()
+           ;
   }
 
   action(Point point) {
+
+  }
+
+  move(Point point) {
 
   }
 

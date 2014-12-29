@@ -39,6 +39,9 @@ class FrameUI {
   List<PanelStructureElement> panels = new List<PanelStructureElement>();
   CanvasRenderingContext2D context;
 
+  Function beforeRender = (){};
+  Function afterRender = (){};
+
   FrameUI(this.context) {
 
     context.canvas..onClick.listen(_onClick)
@@ -50,16 +53,18 @@ class FrameUI {
 
   _render(dynamic some) {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    beforeRender();
     panels.forEach((panel){
       panel.render(context);
     });
+    afterRender();
     window.requestAnimationFrame(_render);
   }
 
   _onClick(MouseEvent event) {
     panels.forEach((panel){
       panel.elements.forEach((element){
-        if (element.area.containsPoint(event.offset)) {
+        if (element.visible && element.area.containsPoint(event.offset)) {
           element.action(event.offset);
         }
       });
@@ -68,8 +73,9 @@ class FrameUI {
 
   _onMouseMove(MouseEvent event) {
     panels.forEach((panel){
-      panel.elements.forEach((element){
-        if (element.area.containsPoint(event.offset)) {
+      panel.elements
+      .forEach((element){
+        if (element.visible && element.area.containsPoint(event.offset)) {
           element.isHover = true;
           element.move(event.offset);
         } else if (element.isHover) {

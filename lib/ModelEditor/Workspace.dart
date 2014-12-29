@@ -1,9 +1,10 @@
 part of ModelEditor;
 
-class Workspace extends WM.IControlStructureElement {
+class Workspace implements WM.IControlStructureElement {
 
   Model model;
 
+  bool visible = true;
   bool isHover = false;
 
   Rectangle area = new Rectangle(0, 0, 0, 0);

@@ -17,6 +17,7 @@ class ModelEditor {
   WM.ListItems frame_list;
   Workspace workspace;
   int modelsId = 1;
+  Map<String, WM.IconButton> buttons = new Map<String, WM.IconButton>();
 
   List<Model> models = new List<Model>();
 
@@ -36,7 +37,10 @@ class ModelEditor {
   }
 
   _initFrame() {
+
     frame = new WM.FrameUI(context);
+    frame.beforeRender = _beforeRender;
+    frame.afterRender = _afterRender;
 
     // init control bar
     frame_controlbar = new WM.PanelStructureElement();
@@ -44,14 +48,23 @@ class ModelEditor {
     frame.panels.add(frame_controlbar);
 
     // buttons on control bar
-    frame_controlbar.elements.add(
-        new WM.IconButton(name: "Doc-Add", action: _createNewModel));
+    buttons["add"] = new WM.IconButton(
+        name: "Doc-Add",
+        action: _createNewModel);
 
-    frame_controlbar.elements.add(
-        new WM.IconButton(name: "Doc-Del", action: _removeCurrentModel));
+    buttons["del"] = new WM.IconButton(
+        name: "Doc-Del",
+        visible: false,
+        action: _removeCurrentModel);
 
-    frame_controlbar.elements.add(
-        new WM.IconButton(name: "Trash", action: _clearCurrentModel));
+    buttons["clear"] = new WM.IconButton(
+        name: "Trash",
+        visible: false,
+        action: _clearCurrentModel);
+
+    buttons.forEach((name, button){
+      frame_controlbar.elements.add(button);
+    });
 
     // init models
     frame_toolbar = new WM.PanelStructureElement();
@@ -96,6 +109,7 @@ class ModelEditor {
 
     if (model is Model) {
       model.points.clear();
+      buttons["clear"].visible = false;
     }
   }
 
@@ -122,7 +136,17 @@ class ModelEditor {
     workspace.model = _getCurrentModel();
   }
 
+  _beforeRender() {
+    Model current = _getCurrentModel();
 
+    buttons["del"].visible = models.length > 0;
+    buttons["clear"].visible =
+        current is Model ? current.points.length > 0 : false;
+  }
+
+  _afterRender() {
+
+  }
 
 
 

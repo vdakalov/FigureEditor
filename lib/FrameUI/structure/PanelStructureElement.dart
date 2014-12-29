@@ -15,8 +15,9 @@ class PanelStructureElement {
 
     int offset = 0;
 
-    elements.forEach((child){
-
+    elements
+    .where((element){ return element.visible; })
+    .forEach((child){
       child.area = new Rectangle(
           area.left + offset,
           area.top,

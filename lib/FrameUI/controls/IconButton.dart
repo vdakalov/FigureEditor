@@ -7,6 +7,7 @@ class IconButton implements IControlStructureElement {
   Point position = new Point(0, 0);
 
   bool isHover = false;
+  bool visible = true;
 
   Rectangle get area => new Rectangle(
       position.x,
@@ -26,7 +27,8 @@ class IconButton implements IControlStructureElement {
 
   IconButton({
     String name,
-    Function action,
+    Function action: null,
+    bool visible: true,
     String path: "/resources/icons",
     String extension: "png"}) {
 
@@ -47,7 +49,9 @@ class IconButton implements IControlStructureElement {
   }
 
   action(Point point) {
-    _onAction();
+    if (_onAction is Function) {
+      _onAction();
+    }
   }
 
   move(Point point) {
