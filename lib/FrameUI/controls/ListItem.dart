@@ -15,6 +15,7 @@ class ListItem implements IControlStructureElement {
 
   bool visible = true;
   bool isHover = false;
+  bool isActive = false;
 
   ListItem(this.id, this.title);
 
@@ -44,7 +45,15 @@ class ListItem implements IControlStructureElement {
 
   }
 
-  move(Point point) {
+  mouseMove(Point point) {
+
+  }
+
+  mouseDown(Point point) {
+
+  }
+
+  mouseUp(Point point) {
 
   }
 

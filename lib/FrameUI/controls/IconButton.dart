@@ -7,6 +7,7 @@ class IconButton implements IControlStructureElement {
   Point position = new Point(0, 0);
 
   bool isHover = false;
+  bool isActive = false;
   bool visible = true;
 
   Rectangle get area => new Rectangle(
@@ -32,10 +33,20 @@ class IconButton implements IControlStructureElement {
     String path: "/resources/icons",
     String extension: "png"}) {
 
-    icon.src = "${path}/${name}.${extension}";
+    setIcon(name: name, path: path, extension: extension);
     icon.id = name;
 
     _onAction = action;
+  }
+
+  setIcon({
+    String name,
+    Function action: null,
+    bool visible: true,
+    String path: "/resources/icons",
+    String extension: "png"}) {
+
+    icon.src = "${path}/${name}.${extension}";
   }
 
   render(CanvasRenderingContext2D context) {
@@ -54,7 +65,15 @@ class IconButton implements IControlStructureElement {
     }
   }
 
-  move(Point point) {
+  mouseMove(Point point) {
+
+  }
+
+  mouseDown(Point point) {
+
+  }
+
+  mouseUp(Point point) {
 
   }
 

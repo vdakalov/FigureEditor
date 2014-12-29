@@ -62,6 +62,10 @@ class ModelEditor {
         visible: false,
         action: _clearCurrentModel);
 
+    buttons["mode"] = new WM.IconButton(
+        name: "Overlay-edit",
+        action: _toggleMode);
+
     buttons.forEach((name, button){
       frame_controlbar.elements.add(button);
     });
@@ -122,6 +126,15 @@ class ModelEditor {
     }
   }
 
+  _toggleMode() {
+
+    List<String> icons = ["Overlay-edit", "Trend Up"];
+
+    workspace.toggleMode();
+
+    buttons["mode"].setIcon(name: icons[workspace.mode]);
+  }
+
   _getCurrentModel() {
     if (frame_list.current is WM.ListItem) {
         return models.singleWhere((model){
@@ -139,6 +152,7 @@ class ModelEditor {
   _beforeRender() {
     Model current = _getCurrentModel();
 
+    buttons["mode"].visible = models.length > 0;
     buttons["del"].visible = models.length > 0;
     buttons["clear"].visible =
         current is Model ? current.points.length > 0 : false;
@@ -148,19 +162,7 @@ class ModelEditor {
 
   }
 
-
-
-
-
-
-
-
-
-
-
 }
-
-
 
 
 

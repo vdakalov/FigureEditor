@@ -7,6 +7,7 @@ class ListItems implements IControlStructureElement {
 
   bool visible = true;
   bool isHover = false;
+  bool isActive = false;
 
   StreamController<ListItem> _onSelect = new StreamController<ListItem>();
   Stream<ListItem> get onSelect => _onSelect.stream;
@@ -92,7 +93,15 @@ class ListItems implements IControlStructureElement {
     });
   }
 
-  move(Point point) {
+  mouseMove(Point point) {
+
+  }
+
+  mouseDown(Point point) {
+
+  }
+
+  mouseUp(Point point) {
 
   }
 
