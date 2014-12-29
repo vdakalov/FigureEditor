@@ -2,7 +2,7 @@ library ModelEditor;
 
 import "dart:html";
 
-import "package:FrameUI/FrameUI/FrameUI.dart" as WM;
+import "package:ModelEditor/FrameUI/FrameUI.dart" as WM;
 
 part "Workspace.dart";
 part "Model.dart";

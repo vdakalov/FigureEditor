@@ -60,6 +60,7 @@ class FrameUI {
         if (element.visible && element.area.containsPoint(event.offset)) {
           element.isHover = true;
           element.mouseMove(event.offset);
+          document.body.style.cursor = element.cursor;
         } else if (element.isHover) {
           element.isHover = false;
         }

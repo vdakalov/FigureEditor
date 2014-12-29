@@ -11,6 +11,7 @@ class Workspace implements WM.IControlStructureElement {
   bool visible = true;
   bool isHover = false;
   bool isActive = false;
+  String cursor = "crosshair";
 
   int _mode;
   int get mode => _mode;

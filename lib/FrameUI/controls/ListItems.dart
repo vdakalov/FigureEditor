@@ -8,6 +8,7 @@ class ListItems implements IControlStructureElement {
   bool visible = true;
   bool isHover = false;
   bool isActive = false;
+  String cursor = "";
 
   StreamController<ListItem> _onSelect = new StreamController<ListItem>();
   Stream<ListItem> get onSelect => _onSelect.stream;

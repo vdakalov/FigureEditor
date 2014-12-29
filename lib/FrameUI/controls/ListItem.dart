@@ -16,6 +16,7 @@ class ListItem implements IControlStructureElement {
   bool visible = true;
   bool isHover = false;
   bool isActive = false;
+  String cursor = "";
 
   ListItem(this.id, this.title);
 

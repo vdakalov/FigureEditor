@@ -9,6 +9,7 @@ class IconButton implements IControlStructureElement {
   bool isHover = false;
   bool isActive = false;
   bool visible = true;
+  String cursor = "";
 
   Rectangle get area => new Rectangle(
       position.x,

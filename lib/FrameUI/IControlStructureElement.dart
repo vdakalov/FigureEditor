@@ -5,6 +5,7 @@ abstract class IControlStructureElement {
   bool isHover;
   bool isActive;
   bool visible;
+  String cursor;
   action(Point point);
   mouseMove(Point point);
   mouseUp(Point point);

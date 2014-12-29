@@ -1,6 +1,6 @@
 
 import "dart:html";
-import "package:FrameUI/ModelEditor/ModelEditor.dart";
+import "package:ModelEditor/ModelEditor/ModelEditor.dart";
 
 main() {
 
