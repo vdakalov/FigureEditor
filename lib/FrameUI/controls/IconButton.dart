@@ -22,7 +22,7 @@ class IconButton implements IControlStructureElement {
 
   int padding = 4;
 
-  List<int> backgroundColor = [220, 255, 220];
+  List<int> backgroundColor = [240, 240, 240];
 
   Function _onAction;
 
@@ -53,8 +53,30 @@ class IconButton implements IControlStructureElement {
 
     if (isHover) {
       context..fillStyle = "rgb(${backgroundColor.join(", ")})"
-             ..fillRect(area.left, area.top, area.width, area.height);
+             ..fillRect(
+                 area.left + 2,
+                 area.top + 2,
+                 area.width - 4,
+                 area.height - 4);
     }
+
+    context..beginPath()
+           ..strokeStyle =
+              "rgb(${backgroundColor.map((i){return i+25;}).join(", ")})"
+           ..moveTo(area.left+1, area.bottom-1)
+           ..lineTo(area.left+1, area.top+1)
+           ..lineTo(area.right-1, area.top+1)
+           ..stroke()
+           ..closePath()
+
+           ..beginPath()
+           ..strokeStyle =
+              "rgb(${backgroundColor.map((i){return i-35;}).join(", ")})"
+           ..moveTo(area.right-1, area.top+1)
+           ..lineTo(area.right-1, area.bottom-1)
+           ..lineTo(area.left+1, area.bottom-1)
+           ..stroke()
+           ..closePath();
 
     context.drawImage(icon, area.left + padding, area.top + padding);
   }

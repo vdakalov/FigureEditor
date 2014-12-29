@@ -44,7 +44,7 @@ class ModelEditor {
 
     // init control bar
     frame_controlbar = new WM.PanelStructureElement();
-    frame_controlbar.area = new Rectangle(0, 0, context.canvas.width, 24);
+    frame_controlbar.area = new Rectangle(0, 0, context.canvas.width, 28);
     frame.panels.add(frame_controlbar);
 
     // buttons on control bar
@@ -113,7 +113,9 @@ class ModelEditor {
 
     if (model is Model) {
       model.points.clear();
-      buttons["clear"].visible = false;
+      if (workspace.mode == workspace.MODE_MOVE) {
+        _toggleMode();
+      }
     }
   }
 
@@ -129,10 +131,11 @@ class ModelEditor {
   _toggleMode() {
 
     List<String> icons = ["Overlay-edit", "Trend Up"];
+    Model model = _getCurrentModel();
 
     workspace.toggleMode();
-
     buttons["mode"].setIcon(name: icons[workspace.mode]);
+
   }
 
   _getCurrentModel() {
@@ -151,11 +154,13 @@ class ModelEditor {
 
   _beforeRender() {
     Model current = _getCurrentModel();
+    bool hasModels = models.length > 0;
+    bool hasCurrent = current is Model;
+    bool hasCurrentPoints = hasCurrent && current.points.length > 0;
 
-    buttons["mode"].visible = models.length > 0;
-    buttons["del"].visible = models.length > 0;
-    buttons["clear"].visible =
-        current is Model ? current.points.length > 0 : false;
+    buttons["mode"].visible = hasModels && hasCurrentPoints;
+    buttons["del"].visible = hasModels;
+    buttons["clear"].visible = hasCurrentPoints;
   }
 
   _afterRender() {
