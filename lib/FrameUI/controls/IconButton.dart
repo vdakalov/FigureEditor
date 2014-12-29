@@ -7,10 +7,16 @@ class IconButton implements IControlStructureElement {
   Point position = new Point(0, 0);
 
   Rectangle get area => new Rectangle(
-      position.x, position.y, icon.width, icon.height);
+      position.x,
+      position.y,
+      icon.width + (padding * 2),
+      icon.height + (padding * 2));
+
   void set area(Rectangle rect) {
     position = new Point(rect.left, rect.top);
   }
+
+  int padding = 4;
 
   List<int> backgroundColor = [220, 255, 220];
 
@@ -29,7 +35,7 @@ class IconButton implements IControlStructureElement {
   }
 
   render(CanvasRenderingContext2D context) {
-    context.drawImage(icon, area.left, area.top);
+    context.drawImage(icon, area.left + padding, area.top + padding);
   }
 
   action(Point point) {

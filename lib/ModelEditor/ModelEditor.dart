@@ -40,7 +40,7 @@ class ModelEditor {
 
     // init control bar
     frame_controlbar = new WM.PanelStructureElement();
-    frame_controlbar.area = new Rectangle(0, 0, context.canvas.width, 20);
+    frame_controlbar.area = new Rectangle(0, 0, context.canvas.width, 24);
     frame.panels.add(frame_controlbar);
 
     // buttons on control bar
