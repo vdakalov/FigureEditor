@@ -1,7 +1,7 @@
 part of FrameUI;
 
 class ControlStructureElement
-extends DisplayedStructureElement
+extends SimpleStructureElement
 implements IControlStructureElement {
 
   PanelStructureElement parent;
