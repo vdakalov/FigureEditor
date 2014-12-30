@@ -1,6 +1,6 @@
 
 import "dart:html";
-import "package:ModelEditor/ModelEditor/ModelEditor.dart";
+import "package:FigureEditor/FigureEditor.dart";
 
 main() {
 
@@ -10,6 +10,6 @@ main() {
   canvas.tabIndex = 1;
   canvas.focus();
 
-  ModelEditor me = new ModelEditor.fromCanvas(canvas);
+  FigureEditor fe = new FigureEditor.fromCanvas(canvas);
 
 }

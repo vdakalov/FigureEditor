@@ -1,4 +1,4 @@
-part of ModelEditor;
+part of FigureEditor;
 
 class Model {
 

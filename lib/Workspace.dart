@@ -1,6 +1,6 @@
-part of ModelEditor;
+part of FigureEditor;
 
-class Workspace implements WM.IControlStructureElement {
+class Workspace extends FrameUI.Rendering {
 
   final int MODE_CREATE = 0;
   final int MODE_MOVE = 1;
@@ -22,9 +22,21 @@ class Workspace implements WM.IControlStructureElement {
     _mode = MODE_CREATE;
   }
 
+  singleCalc() {
+    if (parent is FrameUI.Rendering) {
+      area = new Rectangle(0, 0, parent.area.width, parent.area.height);
+    }
+
+    super.singleCalc();
+  }
+
   render(CanvasRenderingContext2D context) {
 
+    style.cursor = FrameUI.CURSOR.DEFAULT;
+
     if (model is Model) {
+      style.cursor = _mode == MODE_MOVE ?
+          FrameUI.CURSOR.MOVE : FrameUI.CURSOR.CROSSHAIR;
 
       if (model.points.length > 1) {
         context..moveTo(model.points.first.x, model.points.first.y)
@@ -51,13 +63,13 @@ class Workspace implements WM.IControlStructureElement {
     }
   }
 
-  action(Point point) {
+  onAction(Point point, MouseEvent event) {
     if (model is Model && _mode == MODE_CREATE) {
       model.points.add(point);
     }
   }
 
-  mouseMove(Point point) {
+  onMouseMove(Point point, MouseEvent event) {
     if (model is Model) {
       if (_mode == MODE_MOVE && currentPointIndex is int) {
         model.points[currentPointIndex] = point;
@@ -65,7 +77,7 @@ class Workspace implements WM.IControlStructureElement {
     }
   }
 
-  mouseDown(Point point) {
+  onMouseDown(Point point, MouseEvent event) {
     if (model is Model && _mode == MODE_MOVE) {
       Rectangle rect = new Rectangle(point.x-2, point.y-2, 5, 5);
       Iterable points = model.points.where((vertex){
@@ -77,10 +89,8 @@ class Workspace implements WM.IControlStructureElement {
     }
   }
 
-  mouseUp(Point point) {
-
+  onMouseUp(Point point, MouseEvent event) {
     if (model is Model) {
-
       if (_mode == MODE_MOVE && currentPointIndex is int) {
         currentPointIndex = null;
       }
@@ -90,6 +100,14 @@ class Workspace implements WM.IControlStructureElement {
   toggleMode() {
     List<int> modes = [MODE_CREATE, MODE_MOVE];
     _mode = modes[(modes.indexOf(_mode) + 1) % modes.length];
+  }
+
+  createMode() {
+    _mode = MODE_CREATE;
+  }
+
+  moveMode() {
+    _mode = MODE_MOVE;
   }
 
 }
