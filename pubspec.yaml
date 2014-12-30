@@ -5,4 +5,4 @@ environment:
   sdk: '>=1.0.0 <2.0.0'
 dependencies:
   FrameUI:
-    path: /home/raccoon/Workspace/FrameUI
+    git: git@github.com:vdakalov/FrameUI.git
