@@ -4,8 +4,8 @@ import "dart:html";
 
 import "package:FrameUI/init.dart" as FrameUI;
 
-part 'Workspace.dart';
-part 'Model.dart';
+part 'src/Workspace.dart';
+part 'src/Model.dart';
 
 class FigureEditor {
 
