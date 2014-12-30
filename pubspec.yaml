@@ -6,6 +6,6 @@ environment:
 dependencies:
   FrameUI:
     git: git@github.com:vdakalov/FrameUI.git
-  script_inliner: any
+  script_inliner: ">=1.0.0 <2.0.0"
 transformers:
   - script_inliner
