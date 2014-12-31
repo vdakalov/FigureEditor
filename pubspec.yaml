@@ -1,11 +1,15 @@
 name: FigureEditor
 version: 0.0.1
-description: A minimal web app for the developer that doesn’t want to be confused by too much going on.
+author: Viktor Dakalov <atlantidu@gmail.com>
+description: Реализация простого редактора геометрических фигур на FrameUI
+homepage: http://www.vihtor.ru
 environment:
   sdk: '>=1.0.0 <2.0.0'
 dependencies:
   FrameUI:
-    git: git@github.com:vdakalov/FrameUI.git
-  script_inliner: ">=1.0.0 <2.0.0"
+    git:
+      url: git@github.com:vdakalov/FrameUI.git
+      ref: lib
+  script_inliner: '>=1.0.0 <2.0.0'
 transformers:
-  - script_inliner
+- script_inliner
