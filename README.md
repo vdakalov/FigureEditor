@@ -1,4 +1,4 @@
 FigureEditor
 =======
 
-[результат](http://dart.vihtor.ru/FigureEditor/web/)
+[результат](http://github.vihtor.ru/figure-editor/)
